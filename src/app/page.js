@@ -6,6 +6,9 @@ import annivConfettiAnimation from "./assets/anniv-confetti.json";
 import { useEffect, useRef, useState } from "react";
 import { Button, Modal, TextInput, Textarea } from "flowbite-react";
 import { Toaster, toast } from "sonner";
+import backgroundMusic from "./assets/backsound-circus.mp3";
+import spinnnerMusic from "./assets/spinning-sound.mp3";
+import applauseMusic from "./assets/applause-sound2.mp3";
 
 export default function Home() {
   const [isSpinClicked, setIsSpinClicked] = useState(false);
@@ -18,6 +21,48 @@ export default function Home() {
   const [tempWinner, setTempWinner] = useState([]);
   const [tempDoorPrize, setTempDoorPrize] = useState("");
   const [listPlayerString, setListPlayerString] = useState("");
+
+  const audioRef = useRef(null);
+  const audioRefSpinner = useRef(null);
+  const audioRefApplause = useRef(null);
+
+  useEffect(() => {
+    const unmuteAudio = () => {
+      audioRef.current.muted = false;
+      audioRef.current.play();
+      audioRef.current.volume = 1;
+    };
+
+    audioRef.current.muted = true;
+    audioRef.current.play();
+
+    window.addEventListener("click", unmuteAudio);
+    return () => {
+      window.removeEventListener("click", unmuteAudio);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isSpinClicked) {
+      setTimeout(() => {
+        audioRefSpinner.current.play();
+        audioRefSpinner.current.volume = 1;
+      }, 1500);
+    } else {
+      audioRefSpinner.current.pause();
+      audioRefSpinner.current.currentTime = 0;
+    }
+  }, [isSpinClicked]);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      audioRefApplause.current.play();
+      audioRefApplause.current.volume = 1;
+    } else {
+      audioRefApplause.current.pause();
+      audioRefApplause.current.currentTime = 0;
+    }
+  }, [isModalOpen]);
 
   const validationOfPlayerList = () => {
     const winnerCountStr = winnerCount.toString();
@@ -112,9 +157,8 @@ export default function Home() {
       const player = updatedListPlayer[randomIndexPlayer];
       pickedPlayers.push(player);
 
-      // Check if the doorprize key exists in newLog, if not, initialize it
       if (!newLog[doorprize]) {
-        newLog[doorprize] = []; // Initialize as an empty array if it doesn't exist
+        newLog[doorprize] = [];
       }
       newLog[doorprize].push(player);
       updatedListPlayer.splice(randomIndexPlayer, 1);
@@ -138,17 +182,9 @@ export default function Home() {
 
   return (
     <div className="w-full min-h-screen flex flex-col bg-green-500 justify-center">
-      {/* <iframe
-        title="Background Music"
-        width="400"
-        height="400"
-        src={`https://www.youtube.com/embed/BNCRIAE324o?autoplay=1&mute=0&loop=1&playlist=BNCRIAE324o`}
-        frameBorder="0"
-        allow="autoplay; encrypted-media"
-        allowFullScreen
-        // style={{ display: "none" }}
-      /> */}
-      <audio src="https://www.youtube.com/watch?v=BNCRIAE324o" loop />
+      <audio ref={audioRef} src={backgroundMusic} loop />
+      <audio ref={audioRefSpinner} src={spinnnerMusic} />
+      <audio ref={audioRefApplause} src={applauseMusic} loop />
       <div className="relative flex flex-col items-center justify-center mt-4">
         <p
           className="text-white text-center font-bold text-3xl"
