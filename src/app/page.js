@@ -86,7 +86,7 @@ export default function Home() {
 
       setTimeout(() => {
         setIsModalOpen(true);
-      }, 5300);
+      }, 5100);
     }
   };
 
@@ -149,7 +149,7 @@ export default function Home() {
         // style={{ display: "none" }}
       /> */}
       <audio src="https://www.youtube.com/watch?v=BNCRIAE324o" loop />
-      <div className="relative flex flex-col items-center justify-center">
+      <div className="relative flex flex-col items-center justify-center mt-4">
         <p
           className="text-white text-center font-bold text-3xl"
           style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.7)" }}
