@@ -9,6 +9,7 @@ import { Toaster, toast } from "sonner";
 import backgroundMusic from "./assets/backsound-circus.mp3";
 import spinnnerMusic from "./assets/spinning-sound.mp3";
 import applauseMusic from "./assets/applause-sound2.mp3";
+import drumRollMusic from "./assets/drum-roll-v2.mp3";
 
 export default function Home() {
   const [isSpinClicked, setIsSpinClicked] = useState(false);
@@ -44,10 +45,8 @@ export default function Home() {
 
   useEffect(() => {
     if (isSpinClicked) {
-      setTimeout(() => {
-        audioRefSpinner.current.play();
-        audioRefSpinner.current.volume = 1;
-      }, 1500);
+      audioRefSpinner.current.play();
+      audioRefSpinner.current.volume = 1;
     } else {
       audioRefSpinner.current.pause();
       audioRefSpinner.current.currentTime = 0;
@@ -127,7 +126,7 @@ export default function Home() {
       pickTheWinners();
       setTimeout(() => {
         setIsSpinClicked(false);
-      }, 6500);
+      }, 5500);
 
       setTimeout(() => {
         setIsModalOpen(true);
@@ -183,7 +182,7 @@ export default function Home() {
   return (
     <div className="w-full min-h-screen flex flex-col bg-green-500 justify-center">
       <audio ref={audioRef} src={backgroundMusic} loop />
-      <audio ref={audioRefSpinner} src={spinnnerMusic} />
+      <audio ref={audioRefSpinner} src={drumRollMusic} />
       <audio ref={audioRefApplause} src={applauseMusic} loop />
       <div className="relative flex flex-col items-center justify-center mt-4">
         <p
