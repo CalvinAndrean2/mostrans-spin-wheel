@@ -55,6 +55,13 @@ export default function Home() {
 
   useEffect(() => {
     if (isModalOpen) {
+      audioRefSpinner.current.pause();
+      audioRefSpinner.current.currentTime = 0;
+    }
+  }, [isModalOpen]);
+
+  useEffect(() => {
+    if (isModalOpen) {
       audioRefApplause.current.play();
       audioRefApplause.current.volume = 1;
     } else {
@@ -126,7 +133,7 @@ export default function Home() {
       pickTheWinners();
       setTimeout(() => {
         setIsSpinClicked(false);
-      }, 5500);
+      }, 6500);
 
       setTimeout(() => {
         setIsModalOpen(true);
